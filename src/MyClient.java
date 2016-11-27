@@ -10,11 +10,11 @@ import javax.swing.*;
 
     public class MyClient extends JFrame{
 
-        private JTextField Jinput=new JTextField(35);//�����
-        private JButton jbtsort=new JButton("search");//��ѯ��ť
-        private JTextArea youdao=new JTextArea(6,47);//�е���ѯ���
-        private JTextArea baidu=new JTextArea(6,47);//�ٶȲ�ѯ���
-        private JTextArea biying=new JTextArea(6,47);//��Ӧ��ѯ���
+        private JTextField Jinput=new JTextField(35);//
+       // private JButton jbtsort=new JButton("search");//
+        private JTextArea youdao=new JTextArea(6,47);//
+        private JTextArea baidu=new JTextArea(6,47);//
+        private JTextArea biying=new JTextArea(6,47);//
 
         private DataOutputStream toServer;
         private DataInputStream fromServer;
@@ -26,25 +26,25 @@ import javax.swing.*;
         public MyClient() {
             JFrame frame=new JFrame();
 
-            //��ѯ��
+            //
             frame.setLayout(new FlowLayout(FlowLayout.LEFT,10,20));
             frame.add(new JLabel("Input :"));
             frame.add(Jinput);
 
-            //jbtsort.setForeground(new Color(0,0,149));
-            //frame.add(jbtsort);
+           // jbtsort.setForeground(new Color(0,0,149));
+           // frame.add(jbtsort);
 
-            //��ʾ��  �е�
+            //
             frame.add(new JLabel("youdao:"));
             youdao.setLineWrap(true);
             frame.add(youdao);
 
-            //��ʾ��  �ٶ�
+            //
             frame.add(new JLabel("baidu:"));
             baidu.setLineWrap(true);
             frame.add(baidu);
 
-            //��ʾ��  ��Ӧ
+            //
             frame.add(new JLabel("bing"));
             biying.setLineWrap(true);
             frame.add(biying);
@@ -60,7 +60,7 @@ import javax.swing.*;
             frame.setVisible(true);
 
             try {
-                Socket socket=new Socket("202.119.44.57",8088);
+                Socket socket=new Socket("192.168.1.102",8080);
                 fromServer=new DataInputStream(socket.getInputStream());
                 toServer=new DataOutputStream(socket.getOutputStream());
             }
@@ -73,15 +73,20 @@ import javax.swing.*;
         private class TextAreaListener implements ActionListener{
             public void actionPerformed(ActionEvent e){
                 try {
-                    String input=Jinput.getText().trim();
-                    System.out.println(input);//??????????
+                    /*String input=Jinput.getText().trim();
+                    System.out.println(input);
                     toServer.writeChars(input);
                     toServer.flush();
 
                     String result=fromServer.readUTF();
                     youdao.setText(result);
                     baidu.setText(result);
-                    biying.setText(result);
+                    biying.setText(result);*/
+                	double r=Double.parseDouble(Jinput.getText().trim());
+                	toServer.writeDouble(r);
+                	toServer.flush();
+                	double a=fromServer.readDouble();
+                	youdao.append("fff"+a);
                 }
                 catch (IOException ex) {
                     System.err.println(ex);
