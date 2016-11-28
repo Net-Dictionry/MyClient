@@ -10,11 +10,11 @@ import javax.swing.*;
 
     public class MyClient extends JFrame{
 
-        private JTextField Jinput=new JTextField(35);//
+        private JTextField Jinput=new JTextField(36);//
         private JButton jbtsort=new JButton("search");//
-        private JTextArea youdao=new JTextArea(6,47);//
-        private JTextArea baidu=new JTextArea(6,47);//
-        private JTextArea bing=new JTextArea(6,47);//
+        private JTextArea youdao=new JTextArea(6,45);//
+        private JTextArea baidu=new JTextArea(6,45);//
+        private JTextArea bing=new JTextArea(6,45);//
 
         private DataOutputStream toServer;
         private DataInputStream fromServer;
@@ -40,12 +40,12 @@ import javax.swing.*;
             frame.add(youdao);
 
             //
-            frame.add(new JLabel("baidu:"));
+            frame.add(new JLabel("  baidu:  "));
             baidu.setLineWrap(true);
             frame.add(baidu);
 
             //
-            frame.add(new JLabel("bing"));
+            frame.add(new JLabel("   bing:   "));
             bing.setLineWrap(true);
             frame.add(bing);
 
@@ -73,7 +73,6 @@ import javax.swing.*;
             public void actionPerformed(ActionEvent e){
                 try {
                     String input=Jinput.getText().trim();
-                    System.out.println(input);
                     toServer.writeUTF(input);
                     toServer.flush();
 
@@ -91,12 +90,11 @@ import javax.swing.*;
         private class ButtonListener implements ActionListener{
             public void actionPerformed(ActionEvent e){
                 try {
-                    String input=Jinput.getText().trim();
-                    System.out.println(input);
-                    toServer.writeChars(input);
+                	String input=Jinput.getText().trim();
+                    toServer.writeUTF(input);
                     toServer.flush();
 
-                    String result=fromServer.readLine();
+                    String result=fromServer.readUTF();
                     youdao.setText(result);
                     baidu.setText(result);
                     bing.setText(result);
