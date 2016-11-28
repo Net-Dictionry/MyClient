@@ -11,10 +11,10 @@ import javax.swing.*;
     public class MyClient extends JFrame{
 
         private JTextField Jinput=new JTextField(35);//
-       // private JButton jbtsort=new JButton("search");//
+        private JButton jbtsort=new JButton("search");//
         private JTextArea youdao=new JTextArea(6,47);//
         private JTextArea baidu=new JTextArea(6,47);//
-        private JTextArea biying=new JTextArea(6,47);//
+        private JTextArea bing=new JTextArea(6,47);//
 
         private DataOutputStream toServer;
         private DataInputStream fromServer;
@@ -31,8 +31,8 @@ import javax.swing.*;
             frame.add(new JLabel("Input :"));
             frame.add(Jinput);
 
-           // jbtsort.setForeground(new Color(0,0,149));
-           // frame.add(jbtsort);
+            jbtsort.setForeground(new Color(0,0,149));
+            frame.add(jbtsort);
 
             //
             frame.add(new JLabel("youdao:"));
@@ -46,12 +46,12 @@ import javax.swing.*;
 
             //
             frame.add(new JLabel("bing"));
-            biying.setLineWrap(true);
-            frame.add(biying);
+            bing.setLineWrap(true);
+            frame.add(bing);
 
             //
             Jinput.addActionListener(new TextAreaListener());
-            //jbtsort.addActionListener(new ButtonListener());
+            jbtsort.addActionListener(new ButtonListener());
 
             frame.setTitle("Net Dictionary");
             frame.setSize(600,500);
@@ -60,33 +60,27 @@ import javax.swing.*;
             frame.setVisible(true);
 
             try {
-                Socket socket=new Socket("192.168.1.102",8080);
+                Socket socket=new Socket("192.168.1.101",8088);
                 fromServer=new DataInputStream(socket.getInputStream());
                 toServer=new DataOutputStream(socket.getOutputStream());
             }
             catch (IOException ex) {
-                System.err.println(ex);
-
+            	youdao.append(ex.toString()+'\n');
             }
         }
 
         private class TextAreaListener implements ActionListener{
             public void actionPerformed(ActionEvent e){
                 try {
-                    /*String input=Jinput.getText().trim();
+                    String input=Jinput.getText().trim();
                     System.out.println(input);
-                    toServer.writeChars(input);
+                    toServer.writeUTF(input);
                     toServer.flush();
 
                     String result=fromServer.readUTF();
                     youdao.setText(result);
                     baidu.setText(result);
-                    biying.setText(result);*/
-                	double r=Double.parseDouble(Jinput.getText().trim());
-                	toServer.writeDouble(r);
-                	toServer.flush();
-                	double a=fromServer.readDouble();
-                	youdao.append("fff"+a);
+                    bing.setText(result);
                 }
                 catch (IOException ex) {
                     System.err.println(ex);
@@ -94,23 +88,24 @@ import javax.swing.*;
             }
         }
 
-        /*private class ButtonListener implements ActionListener{
+        private class ButtonListener implements ActionListener{
             public void actionPerformed(ActionEvent e){
                 try {
                     String input=Jinput.getText().trim();
+                    System.out.println(input);
                     toServer.writeChars(input);
                     toServer.flush();
 
-                    String result=fromServer.readUTF();
+                    String result=fromServer.readLine();
                     youdao.setText(result);
                     baidu.setText(result);
-                    biying.setText(result);
+                    bing.setText(result);
                 }
                 catch (IOException ex) {
                     System.err.println(ex);
                 }
             }
-        }*/
+        }
     }
 //>>>>>>> origin/master
 
