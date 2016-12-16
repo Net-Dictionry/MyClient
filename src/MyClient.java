@@ -73,13 +73,15 @@ import javax.swing.*;
             public void actionPerformed(ActionEvent e){
                 try {
                     String input=Jinput.getText().trim();
+                    input='1'+'\t'+input;
                     toServer.writeUTF(input);
                     toServer.flush();
 
                     String result=fromServer.readUTF();
-                    youdao.setText(result);
-                    baidu.setText(result);
-                    bing.setText(result);
+                    String[] TransRes=SegmentResult(result);
+                    youdao.setText(TransRes[0]);
+                    baidu.setText(TransRes[1]);
+                    bing.setText(TransRes[2]);
                 }
                 catch (IOException ex) {
                     System.err.println(ex);
@@ -91,18 +93,30 @@ import javax.swing.*;
             public void actionPerformed(ActionEvent e){
                 try {
                 	String input=Jinput.getText().trim();
+                	input='1'+'\t'+input;
                     toServer.writeUTF(input);
                     toServer.flush();
 
                     String result=fromServer.readUTF();
-                    youdao.setText(result);
-                    baidu.setText(result);
-                    bing.setText(result);
+                    String[] TransRes=SegmentResult(result);
+                    youdao.setText(TransRes[0]);
+                    baidu.setText(TransRes[1]);
+                    bing.setText(TransRes[2]);
                 }
                 catch (IOException ex) {
                     System.err.println(ex);
                 }
             }
+        }
+        
+        public static String[] SegmentResult(String str){
+        	String[] res=new String [3];
+        	int index1=str.indexOf('\t');
+        	res[0]=str.substring(0, index1);
+        	int index2=str.indexOf('\t',index1+1);
+        	res[1]=str.substring(index1+1, index2);
+        	res[2]=str.substring(index2+1, str.length());
+        	return res;
         }
     }
 //>>>>>>> origin/master
