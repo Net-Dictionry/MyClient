@@ -67,7 +67,6 @@ class UI extends JFrame  {
         this.setBounds(300, 200, 300, 230);
         mc =x;
         this.listener();
-
         self=this;
         //System.out.print(x.getcommand());
 
@@ -83,10 +82,12 @@ class UI extends JFrame  {
                 String password_b  = new String(jpf2.getPassword());
 
                 if (jtf.getText().isEmpty() || password_a.isEmpty()||password_b.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "请输入用户名和密码", "提示信息", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "请完整输入信息", "提示信息", JOptionPane.WARNING_MESSAGE);
                 }
                 else if(!password_a.equals(password_b)){
                     JOptionPane.showMessageDialog(null, "两次密码不同", "提示信息", JOptionPane.WARNING_MESSAGE);
+                    jpf1.setText("");
+                    jpf2.setText("");
                     System.out.print(password_a);
                     System.out.print(password_b);
                 }
@@ -99,9 +100,9 @@ class UI extends JFrame  {
                         self.dispose();
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "注册失败,已存在该用户！", "提示信息", JOptionPane.WARNING_MESSAGE);
-                        jpf1.setText(" ");
-                        jpf2.setText(" ");
+                        JOptionPane.showMessageDialog(null, "注册失败,已存在该用户名！", "提示信息", JOptionPane.WARNING_MESSAGE);
+                        jpf1.setText("");
+                        jpf2.setText("");
                     }
                     //System.out.print(feedback);
 

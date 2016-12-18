@@ -57,7 +57,6 @@ class UserRegister extends JFrame  {
         this.setBounds(300, 200, 300, 230);
         mc =x;
         this.listener();
-
         self=this;
         //System.out.print(x.getcommand());
 
@@ -68,27 +67,39 @@ class UserRegister extends JFrame  {
         jb1.addActionListener(new ActionListener() {//按钮登录
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.print("注册登录按钮");
-                //UserRegister user = new UserRegister(x);
-                if (jtf.getText().isEmpty() || jpf.getText().isEmpty())
-                    JOptionPane.showMessageDialog(null, "请输入用户名和密码", "提示信息", JOptionPane.WARNING_MESSAGE);
-                else {
-                    String xcommand = "21"+jtf.getText()+"\t"+jpf.getText();
-                    String feedback = mc.Transfer_Command(xcommand);
-                    System.out.print(feedback);
-                    if(feedback.equals("true")){
-                        JOptionPane.showMessageDialog(null, "登录成功！", "提示信息", JOptionPane.WARNING_MESSAGE);
-                        self.dispose();
+
+                //if (mc.get_login() == false) {
+                    System.out.print("注册登录按钮");
+                    //UserRegister user = new UserRegister(x);
+                    if (jtf.getText().isEmpty() || jpf.getText().isEmpty())
+                        JOptionPane.showMessageDialog(null, "请输入用户名和密码", "提示信息", JOptionPane.WARNING_MESSAGE);
+                    else {
+
+                        String xcommand = "21" + jtf.getText() + "\t" + jpf.getText();
+
+                        String _UserName = jtf.getText();
+                        String feedback = mc.Transfer_Command(xcommand);
+                        System.out.print(feedback);
+                        if (feedback.equals("true")) {
+                            JOptionPane.showMessageDialog(null, "登录成功！", "提示信息", JOptionPane.WARNING_MESSAGE);
+                            mc.add_UserName(_UserName);
+                            mc.add_login(true);
+                            self.dispose();
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "登录失败！", "提示信息", JOptionPane.WARNING_MESSAGE);
+                            jpf.setText("");
+                        }
+                        //System.out.print(feedback);
 
                     }
-                    else{
-                        JOptionPane.showMessageDialog(null, "登录失败！", "提示信息", JOptionPane.WARNING_MESSAGE);
-                        jpf.setText(" ");
-                    }
-                    //System.out.print(feedback);
-
-                }
+                //}
+                //else{
+                    //UserShow us = new UserShow(mc);
+                //}
             }
+
+
         });
 
         jb2.addActionListener(new ActionListener() {//按钮注册
